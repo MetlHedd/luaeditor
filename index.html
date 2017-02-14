@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+		<title>luaEditor</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./css/color-picker.min.css">
+		<link rel="stylesheet" href="./css/bootstrap-material-design.min.css">
+		<link rel="stylesheet" href="./css/ripples.min.css">
+		<!--Bootstrap css-->
+		<style>
+			#editor{
+				width: 100%;
+				position: none;
+				margin-top: -1.5%;
+			}
+			.modal-header{
+				background: #333333;
+				color: #e5e5e5;
+			}
+			.modal .close{
+				color: #ffffff;
+			}
+		</style>
+	</head>
+	<body>
+		<!--Navbar-->
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="#">luaEditor</a>
+			</div>
+			<ul class="nav navbar-nav">
+			  <li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">File
+				<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+				  <li><a href="#" id="newf">New file</a></li>
+				  <li><a href="#" id="openf">Open file</a></li>
+				  <li><a href="#" id="raw">Open from raw</a></li>
+				  <li class="divider"></li>
+				  <li><a href="#" id="savef">Save file</a></li>
+				  <li><a href="#" id="saveas">Save as...</a></li>
+				  <li class="divider"></li>
+				  <li><a href="#" id="options">Options</a></li>
+				  <li><a href="#" id="exit">Exit</a></li>
+				</ul>
+			  </li>
+			  <li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Edit
+				<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+				  <li><a href="#" id="undo">Undo</a></li>
+				  <li><a href="#" id="redo">Redo</a></li>
+				  <li class="divider"></li>
+				  <li><a href="#" id="find">Find & Replace</a></li>
+				  <li class="divider"></li>
+				  <li><a href="#" id="sall">Select All</a></li>
+				</ul>
+			  </li>
+			  <li><a href="#">Module API</a></li>
+			  <li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">?
+				<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+				  <li><a href="#" id="txteditor">TextArea Editor</a></li>
+				  <li><a href="#" id="ppeditor">Popup Editor</a></li>
+				  <li><a href="#" id="colorp">Color Picker</a></li>
+				  <li id="lcolor"><a id="lcolor2" data-clipboard-text="#000">#000</a></li>
+				  <li class="divider"></li>
+				  <li><a href="#" id="about">About</a></li>
+				  <li><a href="#">Check for updates</a></li>
+				</ul>
+			  </li>
+			</ul>
+		  </div>
+		</nav>
+		
+		<!--Editor-->
+		<div class="" id="editor">print([[New version: 0.1
+Electron
+Autocompletion]])
+		</div>
+		<div class="container-fluid"><b>Length:</b> <span class="label label-info" id="len">??</span> | <b>Lines:</b> <span class="label label-info" id="lin">??</span></div>
+		<script>
+			document.getElementById("editor").style.height = (window.screen.availHeight - 125)+"px";
+		</script>
+		
+		<!--scripts: bootstrap, jquery, renderer-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="./js/bootbox.min.js"></script>
+		<script src="./js/material.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+		<script src="./js/color-picker.min.js"></script>
+		<script>document.write('<script src="./js/main.js?dev=' + new Date().getTime() + '"\><\/script>');</script>
+		<script>
+			// You can also require other files to run in this process
+			require('./renderer.js')
+		</script>
+	</body>
+</html>
