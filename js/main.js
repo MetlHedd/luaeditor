@@ -25,6 +25,15 @@ editor.setOptions({
 	enableLiveAutocompletion: true
 });
 
+editor.commands.addCommand({
+	name: 'gotolineCommand',
+	bindKey: {win: 'Ctrl-G', mac: 'Command-G'},
+	exec: function(editor) {
+		$("#gotoline").click();
+	},
+	readOnly: true
+});
+
 $("#about").click(function(){
 	var dialog = bootbox.dialog({
 		title: '<b>About:</b>',
@@ -93,7 +102,27 @@ $("#options").click(function(){
 	$.material.init();
 });
 
-// undo, redo, find, replace, selectall
+// gotoline, undo, redo, find, replace, selectall
+$("#gotoline").click(function(){
+	bootbox.dialog({
+		title: '<b>Go to Line:</b>',
+		message: '<input type="number" class="form-control" id="lineNumber" value="1" min="1" max="' + editor.session.getLength() + '">',
+		buttons: {
+			confirm: {
+				label: 'Go!',
+				className: 'btn btn-raised btn-success',
+				callback: function(){
+					editor.gotoLine(parseInt($("#lineNumber").val()));
+				}
+			},
+			cancel: {
+				label: 'Cancel',
+				className: 'btn btn-raised btn-danger'
+			}
+		}
+	});
+});
+
 $("#undo").click(function(){
 	editor.undo();
 });
