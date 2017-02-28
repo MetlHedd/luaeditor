@@ -1,7 +1,19 @@
 const request = require("request");
 const fs = require("fs");
 const remote = require('electron').remote;
-const {dialog} = require('electron').remote;
+const {dialog} = remote;
+const {Menu, MenuItem} = remote;
+const menu = new Menu();
+// menu
+menu.append(new MenuItem({label: 'Cut', click() { clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));editor.session.remove(editor.getSelectionRange()); }}));
+menu.append(new MenuItem({label: 'Copy', click() { clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange())); }}));
+menu.append(new MenuItem({label: 'Paste', click() { editor.insert(clipboard.readText()); }}));
+menu.append(new MenuItem({type: 'separator'}))
+menu.append(new MenuItem({label: 'Select All', click() { editor.selectAll() }}));
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault()
+  menu.popup(remote.getCurrentWindow())
+}, false);
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
