@@ -12,6 +12,8 @@
 		replaceAll(string str1, string str2)
 		
 */
+const clipboard = require('electron').clipboard;
+
 var fileSaved = false;
 var filePath = false;
 
@@ -67,7 +69,6 @@ $("#colorp").click(function(){
 	picker = new CP(document.getElementById('color'));
 	picker.on("change", function(color) {
 		$("#lcolor2").text("#"+color);
-		$("#lcolor2").attr("data-clipboard-text", '#'+color);
 		$("#lcolor").css("background-color", '#'+color);
 		this.target.value = '#' + color;
 	});
@@ -75,7 +76,9 @@ $("#colorp").click(function(){
 });
 
 // color picker (copty to clipboard)
-var clipboard = new Clipboard('#lcolor2');
+$("#lcolor2").click(function() {
+	clipboard.writeText($("#lcolor2").text());
+});
 
 // options
 $("#options").click(function(){
@@ -121,6 +124,19 @@ $("#gotoline").click(function(){
 			}
 		}
 	});
+});
+
+$("#copy").click(function() {
+	clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));
+});
+
+$("#paste").click(function() {
+	editor.insert(clipboard.readText());
+});
+
+$("#cut").click(function() {
+	$("#copy").click();
+	editor.session.remove(editor.getSelectionRange());
 });
 
 $("#undo").click(function(){
