@@ -16,6 +16,7 @@ const {dialog} = remote;
 const {Menu, MenuItem} = remote;
 const menu = new Menu();
 const clipboard = remote.clipboard;
+const storage = require('electron-json-storage');
 
 // menu
 menu.append(new MenuItem({label: 'Cut', click() { clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));editor.session.remove(editor.getSelectionRange()); }}));
@@ -36,7 +37,49 @@ function luaEditor(){
     this.filePath = false;
     this.editor = ace.edit("editor");
 
-    this.editor.setTheme("ace/theme/github");
+	// options
+	var themes = {
+		"github": true,
+		"monokai": true,
+		"eclipse": true,
+		"tomorrow": true,
+		"solarized_dark": true
+	};
+	var defaultOptions = { theme: "Github", path: false, language: "en" };
+	this.options = defaultOptions;
+
+	var self = this;
+
+	storage.has('options', function(er, has){
+		if(er) bootbox.alert("Storage error: "+er);
+		if(has){
+			storage.get('options', function(er, data){
+				if(er) bootbox.alert("Storage error: "+er);
+				self.options = data;
+				for(var i in defaultOptions){
+					if(!self.options[i]) self.options[i] = defaultOptions[i];
+				}
+				if(!themes[self.options.theme]) self.options.theme = "github";
+				this.editor.setTheme("ace/theme/"+self.options.theme);
+				if(self.options.path){
+					fs.readFile(self.options.path, 'utf-8', function(er, data){
+						if(er){
+							self.options.path = false;
+							storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
+						} else{
+							self.editor.setValue(data);
+							self.filePath = self.options.path;
+							self.fileSaved = true;
+						}
+					});
+				}
+			});
+		} else{
+			storage.set('options', defaultOptions, function(er){ if(er) bootbox.alert("Storage error: "+er); });
+		}
+	});
+
+    //this.editor.setTheme("ace/theme/github");
     this.editor.getSession().setMode("ace/mode/lua");
     this.editor.setOptions({
 	    enableBasicAutocompletion: true,
@@ -51,6 +94,7 @@ function luaEditor(){
         },
         readOnly: true
     });
+
 };
 
 var lE = new luaEditor();
@@ -103,7 +147,7 @@ $("#lcolor2").click(function() {
 
 $("#options").click(function(){
 	bootbox.dialog({
-		title: '<b>Options (em breve):</b>',
+		title: '<b>Options:</b>',
 		message: '<div class="form-group"> <div class="checkbox"><label>Module API: <input type="checkbox" checked=""></label></div></div>'
 /*+'<br><b>Style:<select class="form-control" id="select">'
 + "           <option>Github</option> "
@@ -113,12 +157,32 @@ $("#options").click(function(){
 + "           <option>Twilight</option> "
 + "         </select> "
 + '        </b><br><br><b><a href="#" class="btn btn-raised btn-danger">Reset</a></b></form>',*/
-+'<div class="form-group"><label for="s1">Style: </label><select id="s1" class="form-control"><option value="1">Github</option><option value="2">Monokai</option></select></div>'
-+'<div class="form-group"><label for="s2">Language: </label><select id="s2" class="form-control"><option value="1">English</option><option value="2" disabled>Português</option></select></div>',
++'<div class="form-group"><label for="s1">Style: </label><select id="s1" class="form-control" selected="'+lE.options.theme+'"><option value="github">Github</option><option value="monokai">Monokai</option><option value="eclipse">Eclipse</option><option value="tomorrow">Tomorrow</option><option value="chaos">Chaos</option><option class="solarized_dark">Solarized Dark</option></select></div>'
++'<div class="form-group"><label for="s2">Language: </label><select id="s2" class="form-control"><option value="en">English</option><option value="pt" disabled>Português</option></select></div>',
 		buttons: {
-			cancel: {
+			confirm: {
 				label: 'Ok!',
-				className: 'btn btn-raised btn-info'
+				className: 'btn btn-raised btn-success',
+				callback: function(){
+					var themeS = $('#s1 :selected').val();
+					lE.options.theme = themeS;
+					storage.set('options', lE.options, function(er){
+						if(er) bootbox.alert("Storage error: "+er);
+					});
+					bootbox.alert("Changes will be applied in next restart!");
+				}
+			},
+			reset: {
+				label: 'Clear storage',
+				className: 'btn btn-raised btn-warning',
+				callback: function(){
+					storage.clear(function(er){ if(er) bootbox.alert("Storage error: "+er); });
+					bootbox.alert("Changes will be applied in next restart!");
+				}
+			},
+			cancel: {
+				label: 'Cancel',
+				className: 'btn btn-raised btn-danger'
 			}
 		}
 	});
@@ -292,6 +356,8 @@ $("#openf").click(function(){
 				if(er) return bootbox.alert('Error #2: '+er);
                 editor.setValue(data || "");
 				lE.filePath = path[0];
+				lE.options.path = path[0];
+				storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 			});
 		}
 	});
@@ -300,6 +366,8 @@ $("#openf").click(function(){
 $("#newf").click(function(){
 	editor.setValue("");
 	lE.filePath = false;
+	lE.options.path = false;
+	storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 });
 
 $("#saveas").click(function(){
@@ -308,9 +376,11 @@ $("#saveas").click(function(){
 		filters: [{ name: 'Lua (.lua)', extensions: ['lua'] }, { name: 'Text file (.txt)', extensions: ['txt'] }],
 	}, function(path){
 		if(path){
-			lE.filePath = path;
 			fs.writeFile(path, editor.getValue(), 'utf-8', function(er, data){
 				if(er) return bootbox.alert('Error #3: '+er);
+				lE.filePath = path;
+				lE.options.path = path;
+				storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 			});
 		}
 	});
@@ -332,11 +402,14 @@ $("#savef").click(function(){
 			filters: [{ name: 'Lua (.lua)', extensions: ['lua'] }, { name: 'Text file (.txt)', extensions: ['txt'] }],
 		}, function(path){
 			if(path){
-				lE.filePath = path;
 				fs.writeFile(path, editor.getValue(), 'utf-8', function(er, data){
 					if(er) return bootbox.alert('Error #4: '+er);
+					lE.filePath = path;
+					lE.options.filePath = path;
+					storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 				});
 			}
 		});
 	}
 });
+// storage
