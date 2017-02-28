@@ -19,6 +19,6 @@
 	"request": ">=2.79.0"
   },
   "devDependencies": {
-	"electron": "1.4.15"
+	"electron": "1.6.1"
   }
 }
