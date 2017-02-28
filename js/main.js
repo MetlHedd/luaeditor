@@ -12,6 +12,8 @@
 		replaceAll(string str1, string str2)
 		
 */
+const clipboard = require('electron').clipboard;
+
 var fileSaved = false;
 var filePath = false;
 
@@ -23,6 +25,15 @@ editor.setOptions({
 	enableBasicAutocompletion: true,
 	enableSnippets: true,
 	enableLiveAutocompletion: true
+});
+
+editor.commands.addCommand({
+	name: 'gotolineCommand',
+	bindKey: {win: 'Ctrl-G', mac: 'Command-G'},
+	exec: function(editor) {
+		$("#gotoline").click();
+	},
+	readOnly: true
 });
 
 $("#about").click(function(){
@@ -58,7 +69,6 @@ $("#colorp").click(function(){
 	picker = new CP(document.getElementById('color'));
 	picker.on("change", function(color) {
 		$("#lcolor2").text("#"+color);
-		$("#lcolor2").attr("data-clipboard-text", '#'+color);
 		$("#lcolor").css("background-color", '#'+color);
 		this.target.value = '#' + color;
 	});
@@ -66,7 +76,9 @@ $("#colorp").click(function(){
 });
 
 // color picker (copty to clipboard)
-var clipboard = new Clipboard('#lcolor2');
+$("#lcolor2").click(function() {
+	clipboard.writeText($("#lcolor2").text());
+});
 
 // options
 $("#options").click(function(){
@@ -93,7 +105,40 @@ $("#options").click(function(){
 	$.material.init();
 });
 
-// undo, redo, find, replace, selectall
+// gotoline, undo, redo, find, replace, selectall
+$("#gotoline").click(function(){
+	bootbox.dialog({
+		title: '<b>Go to Line:</b>',
+		message: '<input type="number" class="form-control" id="lineNumber" value="1" min="1" max="' + editor.session.getLength() + '">',
+		buttons: {
+			confirm: {
+				label: 'Go!',
+				className: 'btn btn-raised btn-success',
+				callback: function(){
+					editor.gotoLine(parseInt($("#lineNumber").val()));
+				}
+			},
+			cancel: {
+				label: 'Cancel',
+				className: 'btn btn-raised btn-danger'
+			}
+		}
+	});
+});
+
+$("#copy").click(function() {
+	clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));
+});
+
+$("#paste").click(function() {
+	editor.insert(clipboard.readText());
+});
+
+$("#cut").click(function() {
+	$("#copy").click();
+	editor.session.remove(editor.getSelectionRange());
+});
+
 $("#undo").click(function(){
 	editor.undo();
 });
