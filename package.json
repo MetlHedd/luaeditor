@@ -1,6 +1,6 @@
 {
-  "name": "luaEditor",
-  "version": "0.0.1",
+  "name": "luaeditor",
+  "version": "0.1.0",
   "description": "A code editor for lua",
   "main": "index.js",
   "scripts": {
