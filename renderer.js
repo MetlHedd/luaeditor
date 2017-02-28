@@ -43,7 +43,8 @@ function luaEditor(){
 		"monokai": true,
 		"eclipse": true,
 		"tomorrow": true,
-		"solarized_dark": true
+		"solarized_dark": true,
+		"chaos": true
 	};
 	var defaultOptions = { theme: "Github", path: false, language: "en" };
 	this.options = defaultOptions;
@@ -157,7 +158,7 @@ $("#options").click(function(){
 + "           <option>Twilight</option> "
 + "         </select> "
 + '        </b><br><br><b><a href="#" class="btn btn-raised btn-danger">Reset</a></b></form>',*/
-+'<div class="form-group"><label for="s1">Style: </label><select id="s1" class="form-control" selected="'+lE.options.theme+'"><option value="github">Github</option><option value="monokai">Monokai</option><option value="eclipse">Eclipse</option><option value="tomorrow">Tomorrow</option><option value="chaos">Chaos</option><option class="solarized_dark">Solarized Dark</option></select></div>'
++'<div class="form-group"><label for="s1">Style: </label><select id="s1" class="form-control" selected="'+lE.options.theme+'"><option value="github">Github</option><option value="monokai">Monokai</option><option value="eclipse">Eclipse</option><option value="tomorrow">Tomorrow</option><option value="chaos">Chaos</option><option value="solarized_dark">Solarized Dark</option></select></div>'
 +'<div class="form-group"><label for="s2">Language: </label><select id="s2" class="form-control"><option value="en">English</option><option value="pt" disabled>Português</option></select></div>',
 		buttons: {
 			confirm: {
