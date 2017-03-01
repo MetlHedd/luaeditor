@@ -4,7 +4,8 @@
   "description": "A code editor for lua",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "standard"
   },
   "repository": {
     "type": "git",
