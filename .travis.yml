@@ -1,4 +1,3 @@
-dist: trusty
 language: node_js
 node_js:
   - 7
@@ -11,7 +10,7 @@ addons:
       - xvfb
 install:
   - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - Xvfb :99 -screen 0 1024x768x24 +extension RANDR > /dev/null 2>&1 &
   - npm install -g electron electron-mocha
   - npm install
 before_script:
