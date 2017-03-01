@@ -89,7 +89,10 @@ Autocompletion]])
 		</div>
 		<div class="container-fluid"><b>Length:</b> <span class="label label-info" id="len">??</span> | <b>Lines:</b> <span class="label label-info" id="lin">??</span></div>
 		<script>
-			document.getElementById("editor").style.height = (window.screen.availHeight - 125)+"px";
+			document.getElementById("editor").style.height = (window.innerHeight - 80)+"px";
+			window.onresize = function(event){
+				document.getElementById("editor").style.height = (window.innerHeight - 80)+"px";
+			}
 		</script>
 		
 		<!--scripts: bootstrap, jquery, renderer-->
