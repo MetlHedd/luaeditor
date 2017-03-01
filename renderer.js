@@ -46,7 +46,7 @@ function luaEditor(){
 		"solarized_dark": true,
 		"chaos": true
 	};
-	var defaultOptions = { theme: "Github", path: false, language: "en" };
+	var defaultOptions = { theme: "Github", path: false, language: "en", script: false };
 	this.options = defaultOptions;
 
 	var self = this;
@@ -66,13 +66,15 @@ function luaEditor(){
 					fs.readFile(self.options.path, 'utf-8', function(er, data){
 						if(er){
 							self.options.path = false;
-							storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
+							storage.set('options', self.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 						} else{
-							self.editor.setValue(data);
 							self.filePath = self.options.path;
 							self.fileSaved = true;
+							self.editor.setValue(data);
 						}
 					});
+				} else{
+					if(self.options.script) self.editor.setValue(self.options.script);
 				}
 			});
 		} else{
@@ -314,6 +316,13 @@ $.material.init();
 editor.getSession().on('change', function(e) {
     $("#lin").text(editor.session.getLength());
 	$("#len").text(editor.session.getValue().length);
+	if(!lE.filePath){
+		lE.options.script = editor.getValue();
+		storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
+	} else{
+		lE.options.script = false;
+		storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
+	}
 });
 
 // open, save, save as
@@ -329,9 +338,9 @@ $("#raw").click(function(){
 					var link = $("#gr").val();
 					request(link, function(er, res, body){
 						if (!er && res.statusCode == 200) {
+							lE.filePath = false;
 							editor.setValue(body || "");
 							editor.focus();
-							lE.filePath = false;
 						} else{
 							bootbox.alert("Error #1");
 						}
@@ -355,8 +364,8 @@ $("#openf").click(function(){
 		if(path){
 			fs.readFile(path[0], 'utf-8', function(er, data){
 				if(er) return bootbox.alert('Error #2: '+er);
-                editor.setValue(data || "");
 				lE.filePath = path[0];
+                editor.setValue(data || "");
 				lE.options.path = path[0];
 				storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 			});
@@ -368,6 +377,7 @@ $("#newf").click(function(){
 	editor.setValue("");
 	lE.filePath = false;
 	lE.options.path = false;
+	lE.options.script = false;
 	storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 });
 
@@ -381,6 +391,7 @@ $("#saveas").click(function(){
 				if(er) return bootbox.alert('Error #3: '+er);
 				lE.filePath = path;
 				lE.options.path = path;
+				lE.options.script = false;
 				storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 			});
 		}
@@ -407,10 +418,10 @@ $("#savef").click(function(){
 					if(er) return bootbox.alert('Error #4: '+er);
 					lE.filePath = path;
 					lE.options.filePath = path;
+					lE.options.script = false;
 					storage.set('options', lE.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
 				});
 			}
 		});
 	}
 });
-// storage
