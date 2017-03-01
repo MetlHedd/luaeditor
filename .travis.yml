@@ -13,7 +13,7 @@ addons:
       - xvfb
 install:
   - npm prune
-  - npm install -g electron electron-mocha
+  - npm install -g electron
   - npm install
 before_install:
   - if [[ $TRAVIS_OS_NAME = "linux" ]]; then
