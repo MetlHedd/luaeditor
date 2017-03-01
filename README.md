@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/U-12/luaeditor.svg?branch=master)](https://travis-ci.org/U-12/luaeditor)
+
 # luaEditor
 ---
 ## Instalação
