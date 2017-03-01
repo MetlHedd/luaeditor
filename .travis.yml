@@ -15,6 +15,7 @@ install:
   - npm prune
   - npm install --save-dev spectron
   - npm install -g electron npm-check mocha
+  - npm install electron
   - npm install
 before_install:
   - npm-check
