@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "test": "standard"
+    "test": "npm start"
   },
   "repository": {
     "type": "git",

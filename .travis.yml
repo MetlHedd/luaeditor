@@ -6,7 +6,7 @@ os:
   - osx
   - linux
 install:
-  - npm install -g electron electron-builder electron-rebuild mkdirp npm-run-all rimraf standard
+  - npm install -g electron electron-builder electron-rebuild mkdirp npm-run-all rimraf
   - npm install
 addons:
   apt:
