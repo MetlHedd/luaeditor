@@ -17,7 +17,7 @@ install:
   - npm install -g electron npm-check mocha
   - npm install
 before_install:
-  - npm check
+  - npm-check
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
