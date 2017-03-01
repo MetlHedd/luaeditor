@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "test": "npm start"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,10 +21,11 @@
   "author": "U-12",
   "license": "MIT",
   "dependencies": {
-	  "request": ">=2.79.0",
+    "request": ">=2.79.0",
     "electron-json-storage": "3.0.1"
   },
   "devDependencies": {
-	  "electron": "1.6.1"
+    "electron": "1.6.1",
+    "spectron": "^3.6.0"
   }
 }

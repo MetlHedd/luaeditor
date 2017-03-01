@@ -13,11 +13,12 @@ addons:
       - xvfb
 install:
   - npm prune
-  - npm install -g electron
+  - npm install --save-dev spectron
+  - npm install -g electron npm-check mocha
   - npm install
 before_install:
-  - if [[ $TRAVIS_OS_NAME = "linux" ]]; then
-      export DISPLAY=:99.0;
-      sh -e /etc/init.d/xvfb start;
-      sleep 3;
-    fi
+  - npm check
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
