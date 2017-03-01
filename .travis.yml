@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "node"
+  - "7.4.0"
+install:
+    - npm install -g electron
+    - npm install
+script:
+    - npm start
