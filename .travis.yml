@@ -1,0 +1,18 @@
+dist: trusty
+language: node_js
+node_js:
+  - 7
+os:
+  - osx
+  - linux
+install:
+  - npm install -g electron electron-builder electron-rebuild mkdirp npm-run-all rimraf standard
+  - npm install
+addons:
+  apt:
+    packages:
+      - icnsutils
+      - graphicsmagick
+      - xz-utils
+after_success:
+  - build
