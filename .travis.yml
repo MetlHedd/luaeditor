@@ -17,5 +17,5 @@ install:
   - npm install -g mocha
   - npm install
 before_install:
- - chmod +x gradlew
+ - chmod +x ./script/travis-build.sh
 before_script: ./script/travis-build.sh  
