@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - "7.4.0"
-sudo: required
 os:
   - osx
   - linux
@@ -17,4 +16,4 @@ install:
   - npm install --save-dev spectron electron
   - npm install -g mocha
   - npm install
-before_script: ./test/script.sh  
+before_script: ./script/travis-build.sh  
