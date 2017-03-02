@@ -3,7 +3,7 @@ var assert = require('assert')
 var electron = require("electron")
 
 describe('application launch', function () {
-  this.timeout(60000)
+  this.timeout(0)
 
   beforeEach(function () {
     this.app = new Application({
