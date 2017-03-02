@@ -16,9 +16,4 @@ install:
   - npm install --save-dev spectron electron
   - npm install -g mocha
   - npm install
-before_script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      export DISPLAY=:99.0
-      sh -e /etc/init.d/xvfb start
-      sleep 3
-    fi
+before_script: ./test/script.sh  
