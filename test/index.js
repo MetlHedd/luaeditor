@@ -1,10 +1,9 @@
 var Application = require('spectron').Application
 var assert = require('assert')
 var electron = require("electron")
-console.log(electron)
 
 describe('application launch', function () {
-  this.timeout(10000)
+  this.timeout(60000)
 
   beforeEach(function () {
     this.app = new Application({
