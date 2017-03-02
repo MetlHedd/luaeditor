@@ -1,6 +1,4 @@
 language: node_js
-dist: trusty
-sudo: required
 node_js:
   - "7.4.0"
 os:
@@ -15,8 +13,9 @@ addons:
       - xvfb
 install:
   - npm prune
-  - npm install --save-dev spectron electron
-  - npm install -g mocha
+  - npm install --save-dev spectron
+  - npm install -g mocha electron
+  - npm install electron
   - npm install
 before_install:
  - chmod +x ./script/travis-build.sh
