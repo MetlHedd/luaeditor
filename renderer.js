@@ -17,6 +17,7 @@ const {Menu, MenuItem} = remote;
 const menu = new Menu();
 const clipboard = remote.clipboard;
 const storage = require('electron-json-storage');
+const ipcRenderer = require('electron').ipcRenderer;
 
 // menu
 menu.append(new MenuItem({label: 'Cut', click() { clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));editor.session.remove(editor.getSelectionRange()); }}));
@@ -277,20 +278,7 @@ $("#sall").click(function(){
 });
 //
 $("#txteditor").click(function(){
-	var height = (window.screen.availHeight - window.screen.availHeight * 0.2)+"px";
-	var width = (window.screen.availWidth - window.screen.availWidth * 0.4)+"px";
-	
-	bootbox.dialog({
-		title: 'TextArea Editor',
-		message: '<iframe src="http://laagtfm.esy.es/textarea/" height="'+height+'" width="'+width+'" style="border: 1px #000 solid;"></iframe>',
-		size: 'large',
-		buttons: {
-			cancel: {
-				label: 'Close',
-				className: 'btn btn-raised btn-danger'
-			}
-		}
-	});
+	ipcRenderer.send('open-ta-editor');
 });
 
 $("#ppeditor").click(function(){

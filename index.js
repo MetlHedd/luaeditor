@@ -4,12 +4,15 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+const ipcMain = electron.ipcMain;
+
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let taEditorWindow
 
 function createWindow () {
   // Create the browser window.
@@ -31,8 +34,25 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    if (taEditorWindow) taEditorWindow.close();
     mainWindow = null
   })
+}
+
+function createTAEWindow() {
+  if (taEditorWindow) return;
+
+  taEditorWindow = new BrowserWindow({
+    width: 800, height: 600, center: true, useContentSize: true, backgroundColor: '#6A7495',
+    minWidth: 800, minHeight: 600,
+    webPreferences: {nodeIntegration: false}
+  });
+  taEditorWindow.loadURL('http://laagtfm.esy.es/textarea/');
+  taEditorWindow.setMenu(null);
+
+  taEditorWindow.on('closed', function() {
+    taEditorWindow = null;
+  });
 }
 
 // This method will be called when Electron has finished
@@ -59,3 +79,7 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+ipcMain.on('open-ta-editor', (event, arg) => {
+  createTAEWindow();
+});
