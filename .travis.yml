@@ -19,4 +19,4 @@ install:
   - npm install
 before_install:
  - chmod +x ./script/travis-build.sh
-before_script: ./script/travis-build.sh  
+ - ./script/travis-build.sh  
