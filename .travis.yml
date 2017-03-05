@@ -3,7 +3,6 @@ node_js:
   - "7.4.0"
 os:
   - osx
-  - linux
 cache:
   directories:
     - node_modules
@@ -16,7 +15,4 @@ install:
   - npm install --save-dev spectron
   - npm install -g mocha electron
   - npm install electron
-  - npm install
-before_install:
- - chmod +x ./script/travis-build.sh
- - ./script/travis-build.sh  
+  - npm install 
