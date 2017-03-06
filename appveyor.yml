@@ -9,6 +9,8 @@ cache:
 install:
   - ps: Install-Product node 7 x64
   - npm install
+  - npm install --save-dev spectron
+  - npm install -g mocha electron
 
 build_script:
   - npm test
