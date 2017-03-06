@@ -18,6 +18,7 @@ const menu = new Menu();
 const clipboard = remote.clipboard;
 const storage = require('electron-json-storage');
 const ipcRenderer = require('electron').ipcRenderer;
+const mdapi = require("./modules/moduleapi.js")
 
 // menu
 menu.append(new MenuItem({label: 'Cut', click() { clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));editor.session.remove(editor.getSelectionRange()); }}));
@@ -412,4 +413,12 @@ $("#savef").click(function(){
 			}
 		});
 	}
+});
+
+$("#mdtest").click(function(){
+	let newGame = new mdapi('tfm.exec.newGame', [{ id: 'mapcode', name: 'String/Number/Other', type: 'string', value: '0', ph: 'Example: "@123456", 0, "#12", \'xml\'' }], bootbox, editor);
+	newGame.generate(function(script){
+		editor.insert(script)
+	})
+	$.material.init()
 });
