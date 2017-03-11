@@ -13,6 +13,7 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 let taEditorWindow
+let ppEditorWindow
 
 function createWindow () {
   // Create the browser window.
@@ -35,6 +36,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     if (taEditorWindow) taEditorWindow.close();
+    if (ppEditorWindow) ppEditorWindow.close();
     mainWindow = null
   })
 }
@@ -52,6 +54,22 @@ function createTAEWindow() {
 
   taEditorWindow.on('closed', function() {
     taEditorWindow = null;
+  });
+}
+
+function createPPWindow() {
+  if (ppEditorWindow) return;
+
+  ppEditorWindow = new BrowserWindow({
+    width: 800, height: 600, center: true, useContentSize: true, backgroundColor: '#6A7495',
+    minWidth: 800, minHeight: 600,
+    webPreferences: {nodeIntegration: false}
+  });
+  ppEditorWindow.loadURL('http://laagtfm.esy.es/');
+  ppEditorWindow.setMenu(null);
+
+  ppEditorWindow.on('closed', function() {
+    ppEditorWindow = null;
   });
 }
 
@@ -82,4 +100,8 @@ app.on('activate', function () {
 
 ipcMain.on('open-ta-editor', (event, arg) => {
   createTAEWindow();
+});
+
+ipcMain.on('open-pp-editor', (event, arg) => {
+  createPPWindow();
 });

@@ -283,7 +283,8 @@ $("#txteditor").click(function(){
 });
 
 $("#ppeditor").click(function(){
-	var height = (window.screen.availHeight - window.screen.availHeight * 0.2)+"px";
+	ipcRenderer.send('open-pp-editor');
+	/*var height = (window.screen.availHeight - window.screen.availHeight * 0.2)+"px";
 	var width = (window.screen.availWidth - window.screen.availWidth * 0.4)+"px";
 	
 	bootbox.dialog({
@@ -296,7 +297,7 @@ $("#ppeditor").click(function(){
 				className: 'btn btn-raised btn-danger'
 			}
 		}
-	});
+	});*/
 });
 //
 $.material.init();
