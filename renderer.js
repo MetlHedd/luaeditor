@@ -99,7 +99,22 @@ function luaEditor(){
         },
         readOnly: true
     });
-
+	this.editor.commands.addCommand({
+		name: 'findCommand',
+		bindKey: {win: 'Ctrl-F', mac: 'Command-F'},
+		exec: function(editor) {
+			$('#find').click();
+		},
+		readOnly: true
+	});
+	this.editor.commands.addCommand({
+		name: 'replaceCommand',
+		bindKey: {win: 'Ctrl-H', mac: 'Command-H'},
+		exec: function(editor) {
+			$('#find').click();
+		},
+		readOnly: true
+	});
 };
 
 var lE = new luaEditor();
@@ -239,19 +254,63 @@ $("#redo").click(function(){
 $("#find").click(function(){
 	var dialog = bootbox.dialog({
 		title: '<b>Find and replace:</b>',
-		message: '<form class="form-horizontal"><div class="form-group"><label class="col-lg-2 control-label">Find what: </label><div class="col-lg-6"><input type="text" class="form-control" id="fw"></div></div><div class="form-group"><label class="col-lg-2 control-label">Replace what: </label><div class="col-lg-6"><input type="text" class="form-control" id="rw"></div></div><br><div class="form-group"><div class="col-lg-10"><div class="radio"><label><input type="radio" name="fa" id="fa" value="op1" checked=""> Find</label></div><div class="radio"><label><input type="radio" id="ra" name="ra" value="op2"> Replace</label></div></div></div></form>',
+		message: '<form class="form-horizontal">' + 
+					'<div class="form-group">' + 
+						'<label class="col-lg-2 control-label">Find what: </label>' +
+						'<div class="col-lg-6">' +
+							'<input type="text" class="form-control" id="fw">' +
+						'</div>' +
+					'</div>' + 
+					'<div class="form-group">' +
+						'<label class="col-lg-2 control-label">Replace what: </label>' + 
+						'<div class="col-lg-6">' + 
+							'<input type="text" class="form-control" id="rw">' +
+						'</div>' +
+					'</div><br>' +
+					'<div class="form-group">' + 
+						'<div class="col-lg-10">' + 
+							'<div class="radio">' + 
+								'<label>' + 
+									'<input type="radio" name="fa" id="fa" value="op1" checked=""> Find' + 
+								'</label>' + 
+							'</div>' + 
+							'<div class="radio">' + 
+								'<label>' + 
+									'<input type="radio" id="ra" name="ra" value="op2"> Replace' + 
+								'</label>' + 
+							'</div>' + 
+						'</div>' + 
+					'</div>' + 
+					'<div class="form-group" style="margin-top: 0;">' +
+						'<div class="col-lg-10">' +
+							'<div class="checkbox">' +
+								'<label>' +
+									'<input type="checkbox" id="use-reg-exp"> Regular Expression&nbsp;&nbsp;&nbsp;' + 
+								'</label>' +
+								'<label>' +
+									'<input type="checkbox" id="use-case-sensitive"> Case Sensitive&nbsp;&nbsp;&nbsp;' + 
+								'</label>' +
+								'<label>' +
+									'<input type="checkbox" id="use-whole-word"> Whole Word' + 
+								'</label>' +
+							'</div>' +
+						'</div>' +
+					'</div>' +
+				'</form>',
 		buttons: {
 			confirm: {
 				label: 'Go!',
 				className: 'btn btn-raised btn-success',
 				callback: function(){
-					if($('#fa').is(':checked')){
-						editor.findAll($("#fw").val());
-					} else{
-						editor.findAll($("#fw").val());
+					editor.findAll($("#fw").val(), {
+						regExp: $('#use-reg-exp').is(':checked'),
+						caseSensitive: $('#use-case-sensitive').is(':checked'),
+						wholeWord: $('#use-whole-word').is(':checked'),
+					});
+
+					if(!($('#fa').is(':checked')))
 						editor.replaceAll($("#rw").val());
-						editor.findAll($("#rw").val());
-					}
+
 					editor.focus();
 				}
 			},
@@ -284,20 +343,6 @@ $("#txteditor").click(function(){
 
 $("#ppeditor").click(function(){
 	ipcRenderer.send('open-pp-editor');
-	/*var height = (window.screen.availHeight - window.screen.availHeight * 0.2)+"px";
-	var width = (window.screen.availWidth - window.screen.availWidth * 0.4)+"px";
-	
-	bootbox.dialog({
-		title: 'Popup Editor',
-		message: '<iframe src="http://laagtfm.esy.es/" height="'+height+'" width="'+width+'" style="border: 1px #000 solid;"></iframe>',
-		size: 'large',
-		buttons: {
-			cancel: {
-				label: 'Close',
-				className: 'btn btn-raised btn-danger'
-			}
-		}
-	});*/
 });
 //
 $.material.init();
