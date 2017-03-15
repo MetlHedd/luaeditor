@@ -207,6 +207,7 @@ $("#options").click(function(){
 		}
 	});
 	$.material.init();
+	$('select').select2();
 });
 
 // gotoline, undo, redo, find, replace, selectall
@@ -462,9 +463,21 @@ $("#savef").click(function(){
 });
 
 $("#mdtest").click(function(){
-	let newGame = new mdapi('tfm.exec.newGame', [{ id: 'mapcode', name: 'String/Number/Other', type: 'string', value: '0', ph: 'Example: "@123456", 0, "#12", \'xml\'' }], bootbox, editor);
+	/*let newGame = new mdapi('tfm.exec.newGame', [{ id: 'mapcode', name: 'String/Number/Other', type: 'string', value: '0', ph: 'Example: "@123456", 0, "#12", \'xml\'' }], bootbox, editor);
 	newGame.generate(function(script){
 		editor.insert(script)
 	})
-	$.material.init()
+	$.material.init()*/
+	let functions = [{ id: 'newGame', text: 'tfm.exec.newGame'}, { id: 'setShaman', text: 'tfm.exec.setShaman' }]
+	bootbox.dialog({
+		title: 'Module API',
+		message: '<select id="ms"></select>',
+		buttons: {
+			cancel: {
+				label: 'Close',
+				className: 'btn btn-raised btn-danger'
+			}
+		}
+	})
+	$("#ms").select2({data: functions})
 });
