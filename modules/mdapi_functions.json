@@ -1,0 +1,10 @@
+[{
+    "id": "0",
+    "text": "tfm.exec.newGame",
+    "elements": [{ "id": "mapCode", "name": "String/Number/Other...", "type": "string", "value": 0, "ph": "@0/0/'xml'" }]
+},
+{
+    "id": "1",
+    "text": "tfm.exec.setShaman",
+    "elements": [{ "id": "playerName", "name": "String/Other...", "type": "string", "value": 0, "ph": "playerName" }]
+}]
