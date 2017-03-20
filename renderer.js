@@ -19,6 +19,10 @@ const clipboard = remote.clipboard;
 const storage = require('electron-json-storage');
 const ipcRenderer = require('electron').ipcRenderer;
 const mdapi = require("./modules/moduleapi.js")
+let mdfn = fs.readFile('./modules/mdapi_functions.json', 'utf-8', function(er, data){
+	if(er) mdfn = []
+	mdfn = JSON.parse(data)
+})
 
 // menu
 menu.append(new MenuItem({label: 'Cut', click() { clipboard.writeText(editor.session.getTextRange(editor.getSelectionRange()));editor.session.remove(editor.getSelectionRange()); }}));
@@ -468,7 +472,6 @@ $("#mdtest").click(function(){
 		editor.insert(script)
 	})
 	$.material.init()*/
-	let functions = [{ id: 'newGame', text: 'tfm.exec.newGame'}, { id: 'setShaman', text: 'tfm.exec.setShaman' }]
 	bootbox.dialog({
 		title: 'Module API',
 		message: '<select id="ms"></select>',
@@ -476,8 +479,17 @@ $("#mdtest").click(function(){
 			cancel: {
 				label: 'Close',
 				className: 'btn btn-raised btn-danger'
+			},
+			confirm: {
+				label: 'Ok!',
+				className: 'btn btn-raised brn-success',
+				callback: function(){
+					let fn = $("#ms :selected").val()
+					let mdd = new mdapi(mdfn[fn].text, mdfn[fn].elements, bootbox);
+					mdd.generate((script) => editor.insert(script))
+				}
 			}
 		}
 	})
-	$("#ms").select2({data: functions})
+	$("#ms").select2({data: mdfn, width: '80%'})
 });

@@ -1,10 +1,15 @@
 [{
-    "id": "0",
+    "id": 0,
     "text": "tfm.exec.newGame",
-    "elements": [{ "id": "mapCode", "name": "String/Number/Other...", "type": "string", "value": 0, "ph": "@0/0/'xml'" }]
+    "elements": [{ "id": "mapCode", "name": "mapCode (string or number)", "type": "string", "value": 0, "ph": "@0/0/'xml'" }]
 },
 {
-    "id": "1",
+    "id": 1,
     "text": "tfm.exec.setShaman",
-    "elements": [{ "id": "playerName", "name": "String/Other...", "type": "string", "value": 0, "ph": "playerName" }]
+    "elements": [{ "id": "playerName", "name": "playerName (string)", "type": "string", "value": "Brenower", "ph": "playerName" }]
+},
+{
+    "id": 2,
+    "text": "tfm.exec.addConjuration",
+    "elements": [{ "id": "xPosition", "name": "xPosition (number)", "type": "number", "value": 0, "ph": "0" }, { "id": "yPosition", "name": "yPosition (number)", "type": "number", "value": 0, "ph": "0" }, { "id": "timer", "name": "Duration (number)", "type": "number", "value": 1000, "ph": "0" }]
 }]

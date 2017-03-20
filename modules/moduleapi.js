@@ -9,7 +9,6 @@ class moduleapi{
         this.title = title;
         this.elements = elements;
         this.bootbox = bootbox;
-        this.editor = editor;
         this.html = "";
         let self = this;
         this.elements.forEach(function(elm){
@@ -42,7 +41,7 @@ class moduleapi{
                             } else{
                                 script += $("#"+elm.id).val()
                             }
-                            if(index+1<self.elements.lenght) script += ", "
+                            if(index+1<Object.keys(self.elements).length) script += ", "
                         });
                         script += ")"
                         callback(script)
