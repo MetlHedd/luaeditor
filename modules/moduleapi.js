@@ -14,7 +14,7 @@ class moduleapi{
         this.elements.forEach(function(elm){
             console.log(elm)
             if(elm.type == "boolean"){
-                self.html += '<div class="form-group"><label>Boolean</label><select id="'+elm.id+'" class="form-control"><option value="true">True</option><option value="false">False</option></select></div>'
+                self.html += '<div class="form-group"><label>'+elm.name+'</label><select id="'+elm.id+'" class="form-control"><option value="true">True</option><option value="false">False</option></select></div>'
             } else{
                 self.html += '<div class="form-group"><label>'+elm.name+'</label><input type="'+elm.type+'" class="form-control" id="'+elm.id+'" value="'+elm.value+'" placeholder="'+elm.ph+'"></div>';
             }

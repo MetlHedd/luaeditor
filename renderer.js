@@ -58,10 +58,10 @@ function luaEditor(){
 	var self = this;
 
 	storage.has('options', function(er, has){
-		if(er) bootbox.alert("Storage error: "+er);
+		if(er) bootbox.alert("Storage error #1: "+er);
 		if(has){
 			storage.get('options', function(er, data){
-				if(er) bootbox.alert("Storage error: "+er);
+				if(er) bootbox.alert("Storage error #2: "+er);
 				self.options = data;
 				for(var i in defaultOptions){
 					if(!self.options[i]) self.options[i] = defaultOptions[i];
@@ -72,7 +72,7 @@ function luaEditor(){
 					fs.readFile(self.options.path, 'utf-8', function(er, data){
 						if(er){
 							self.options.path = false;
-							storage.set('options', self.options, function(er){if(er) bootbox.alert("Storage error: "+er);});
+							storage.set('options', self.options, function(er){if(er) bootbox.alert("Storage error #3: "+er);});
 						} else{
 							self.filePath = self.options.path;
 							self.fileSaved = true;

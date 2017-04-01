@@ -1,15 +1,47 @@
-[{
-    "id": 0,
-    "text": "tfm.exec.newGame",
-    "elements": [{ "id": "mapCode", "name": "mapCode (string or number)", "type": "string", "value": 0, "ph": "@0/0/'xml'" }]
-},
+[
 {
-    "id": 1,
-    "text": "tfm.exec.setShaman",
-    "elements": [{ "id": "playerName", "name": "playerName (string)", "type": "string", "value": "Brenower", "ph": "playerName" }]
+    "id": 0,
+    "text": "tfm.exec.disableAfkDeath",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)" }]
 },
 {
     "id": 2,
-    "text": "tfm.exec.addConjuration",
-    "elements": [{ "id": "xPosition", "name": "xPosition (number)", "type": "number", "value": 0, "ph": "0" }, { "id": "yPosition", "name": "yPosition (number)", "type": "number", "value": 0, "ph": "0" }, { "id": "timer", "name": "Duration (number)", "type": "number", "value": 1000, "ph": "0" }]
-}]
+    "text": "tfm.exec.disableAutoNewGame",
+    "elements": [{ "id": "booldi2", "type": "boolean", "name": "activate (boolean)" }]
+},
+{
+    "id": 3,
+    "text": "tfm.exec.disableAutoScore",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)" }]
+},
+{
+    "id": 4,
+    "text": "tfm.exec.disableAutoShaman",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)" }]
+},
+{
+    "id": 5,
+    "text": "tfm.exec.disableAutoTimeLeft",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)"}]
+},
+{
+    "id": 6,
+    "text": "tfm.exec.disableDebugCommand",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)"}]
+},
+{
+    "id": 7,
+    "text": "tfm.exec.disableMinimalistMode",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)"}]
+},
+{
+    "id": 8,
+    "text": "tfm.exec.disableMortCommand",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)"}]
+},
+{
+    "id": 9,
+    "text": "tfm.exec.disableWatchCommand",
+    "elements": [{ "id": "booldi", "type": "boolean", "name": "activate (boolean)"}]
+}
+]
