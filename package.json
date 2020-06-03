@@ -25,7 +25,7 @@
     "electron-json-storage": "3.0.2"
   },
   "devDependencies": {
-    "electron": "1.8.4",
+    "electron": "9.0.2",
     "spectron": "^3.6.0"
   }
 }
